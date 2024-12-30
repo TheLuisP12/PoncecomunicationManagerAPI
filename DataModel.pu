@@ -1,0 +1,47 @@
+@startuml
+
+entity User {
+    + _id : ObjectId
+    + name : String
+    + campaing: String
+    + affiliated : Boolean
+    + temperature : String <<Frio/Tibio/Caliente>>
+    + createdAt : Date
+    + updatedAt : Date
+}
+entity FlowHistorial {
+    + _id : ObjectId
+    + userId : ObjectId
+    + states : Array
+      - state : String
+      - description : String
+      - date : Date
+    + lastStateDate : Date
+    + createdAt : Date
+    + updatedAt : Date
+}
+
+entity Message {
+    + _id : ObjectId
+    + to : Array <<[ObjectId]>>
+    + content : String
+    + status : String <<Pending/Sent/Confirmed>>
+    + sentDate: Date
+    + scheduled: Boolean
+    + confirmed: Boolean
+    + needsConfirmation: Boolean
+    + createdAt : Date
+    + updatedAt : Date
+}
+
+entity MessageTemplate {
+    + _id : ObjectId
+    + name : String
+    + content : String
+    + createdAt : Date
+    + updatedAt : Date
+}
+
+User "1" -- "Many" FlowHistorial : has
+User "1" -- "Many" Message : received_by
+@enduml
